@@ -2,556 +2,201 @@
 <html lang="en">
 
 <head>
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
-
-        /*자꾸 속성값 입력할 때 ":"을 한번 더 붙여서 에러가 나고 있음!*/
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        .toggle {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: #000 url(menu.png);
-            background-size: 30px;
-            background-position: center;
-            background-repeat: no-repeat;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        .toggle.active {
-            background: #000 url(close.png);
-            background-size: 25px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        section {
-            padding: 100px;
-            min-height: 100vh;
-        }
-
-        .banner {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        .banner .imgSidebar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 500px;
-            height: 100%;
-        }
-
-        .banner .imgSidebar img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .banner .contentBx,
-        .sidebar {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: calc(100% - 500px);
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 100px;
-        }
-
-        .logoText {
-            position: absolute;
-            top: 40px;
-            left: 100px;
-            font-size: 1.2em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            background: #333;
-            color: #fff;
-            padding: 0 5px;
-        }
-
-        .banner .contentBx h4 {
-            font-size: 1.5em;
-            color: #333;
-            font-weight: 300;
-        }
-
-        .banner .contentBx h4 span {
-            color: #00bcd4;
-            font-size: 1.5em;
-            font-weight: 700;
-        }
-
-        .banner .contentBx h2 {
-            font-size: 3em;
-            color: #333;
-            line-height: 1em;
-        }
-
-        p {
-            font-size: 1.1em;
-            margin: 20px 0;
-            font-weight: 300;
-        }
-
-        .btn {
-            background: #00bcd4;
-            color: #fff;
-            padding: 10px 30px;
-            display: inline-block;
-            text-decoration: none;
-            font-weight: 500;
-            letter-spacing: 2px;
-        }
-
-        .sidebar {
-            position: fixed;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.5s;
-            padding: 40px;
-            z-index: 100;
-            right: -100%;
-        }
-
-        .sidebar.active {
-            right: 0;
-        }
-
-        .sidebar ul {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .sidebar ul li {
-            list-style: none;
-        }
-
-        .sidebar ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 2em;
-            margin: 10px 0;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .sidebar ul li a:hover {
-            color: #00bcd4;
-        }
-
-        .sci {
-            position: absolute;
-            left: 100px;
-            bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .sci li {
-            margin-right: 10px;
-            list-style: none;
-        }
-
-        .sci li img {
-            transform: scale(0.5);
-            opacity: 0.7;
-        }
-
-        .sci li img:hover {
-            opacity: 1;
-        }
-
-        .title {
-            width: 100%;
-            text-align: center;
-        }
-
-        .title h2 {
-            position: relative;
-            color: #00bcd4;
-            font-size: 1.8em;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .title p {
-            max-width: 700px;
-            display: inline-block;
-        }
-
-        .title h2::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: -10px;
-            width: 60px;
-            height: 4px;
-            background: #000;
-        }
-
-        .title.white h2,
-        .title.white p {
-            color: #fff;
-        }
-
-        .title.white h2::before {
-            background: #fff;
-        }
-
-        .about {
-            background: #000;
-        }
-
-        .about .content {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        .about .content .textBx {
-            min-width: 49%;
-            width: 49%;
-        }
-
-        .about .content .textBx p {
-            color: #fff;
-        }
-
-        .about .content .imgBx {
-            margin-left: 40px;
-        }
-
-        .about .content .imgBx img {
-            max-width: 100%;
-        }
-
-        .services .content {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .services .content .servicesBx {
-            padding: 40px 20px;
-            max-width: 340px;
-            margin: 28px;
-            transition: 0.5s;
-            text-align: center;
-            background: #f5f5f5;
-        }
-
-        .services .content .servicesBx:hover {
-            background: #000;
-        }
-
-        .services .content .servicesBx img {
-            max-width: 80px;
-            transition: 0.5s;
-        }
-
-        .services .content .servicesBx:hover img {
-            filter: invert(1);
-        }
-
-        .services .content .servicesBx h2 {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: 600;
-            transition: 0.5s;
-        }
-
-        .services .content .servicesBx:hover h2 {
-            color: #fff;
-        }
-
-        .services .content .servicesBx p {
-            margin: 0;
-            transition: 0.5s;
-        }
-
-        .services .content .servicesBx:hover p {
-            color: #fff;
-        }
-
-        .work .content {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .work .content .workBx {
-            position: relative;
-            width: 265px;
-            height: 265px;
-            margin: 10px;
-            transition: 0.5s;
-            text-align: center;
-        }
-
-        .work .content .workBx .imgBx,
-        .work .content .workBx .textBx {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .work .content .workBx .imgBx img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .work .content .workBx .textBx {
-            background: #000;
-            opacity: 0;
-            transition: 0.5s;
-
-        }
-
-        .work .content .workBx:hover .textBx {
-            opacity: 1;
-        }
-
-        .work .content .workBx .textBx h3 {
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1em;
-        }
-
-        .contact {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .contact .contactForm {
-            position: relative;
-            width: 700px;
-            margin-top: 20px;
-        }
-
-        .contact .contactForm .row {
-            width: 100%;
-            display: flex;
-        }
-
-        .contact .contactForm .row .col50 {
-            width: 50%;
-            margin: 10px;
-        }
-
-        .contact .contactForm .row .col100 {
-            width: 100%;
-            margin: 10px;
-            text-align: center;
-        }
-
-        .contact .contactForm .row input,
-        .contact .contactForm .row textarea {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            outline: none;
-            background: #111;
-            color: #fff;
-            font-size: 16px;
-            resize: none;
-        }
-
-        .contact .contactForm .row textarea {
-            height: 100px;
-        }
-
-        .contact .contactForm .row input[type="submit"] {
-            background: #00bcd4;
-            color: #fff;
-            padding: 10px 30px;
-            display: inline-block;
-            font-weight: 500;
-            letter-spacing: 2px;
-            cursor: pointer;
-            max-width: 150px;
-        }
-
-        .copyright {
-            color: #fff;
-            background: #111;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .copyright p {
-            margin: 0;
-            font-size: 13px;
-        }
-
-        /*img 반응형*/
-        @media (max-width: 991px) {
-            .banner .imgSidebar {
-                display: none;
-            }
-
-            .banner .contentBx,
-            .sidebar {
-                width: 100%;
-                padding: 40px;
-            }
-
-            .logoText {
-                left: 40px;
-            }
-
-            .toggle {
-                right: 40px;
-            }
-
-            .sci {
-                left: 40px;
-            }
-
-            section {
-                padding: 40px;
-            }
-
-            .about .content {
-                flex-direction: column;
-            }
-
-            .about .content .textBx {
-                min-width: 100%;
-                width: 100%;
-            }
-
-            .about .content {
-                margin-top: 0;
-            }
-
-            .about .content .imgBx {
-                margin-left: 0;
-            }
-
-            .services .content .servicesBx {
-                padding: 30px 20px;
-                max-width: 340px;
-                margin: 10px;
-            }
-
-            .contact .contactForm {
-                width: 100%;
-            }
-
-            .contactForm .row {
-                width: 100%;
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            .contact .contactForm .row .col50 {
-                width: 100%;
-            }
-
-            .sidebar ul li a {
-                font-size: 1.5em;
-            }
-
-            @media (max-width: 500px) {
-
-                .services .content .servicesBx,
-                .work .content .workBx {
-                    max-width: 100%;
-                    width: 100%;
-                    margin: 10px 0;
-                }
-            }
-        }
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <title>삽질's Portfolio | Contact Me</title>
+    <title>삽질's Portfolio | 소개 페이지</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="toggle" onclick="toggleMenu();"></div>
+
+    <section class="banner" id="home">
+        <div class="imgSidebar">
+            <img src="Kakao1.jpg">
+        </div>
+        <div class="contentBx">
+            <h5 class="logoText">My_Portfolio</h5>
+            <div>
+                <h4><span>Hello</span>, I'm</h4>
+                <h2>Kim seonghyeon</h2>
+                <h4>I'm a Junior Back End Web Developer.</h4>
+                <p>27살, 전공도 다른 4학년 대학생이 컴퓨터가 좋아서 개발공부를 시작했습니다. 커피와 게임을 좋아합니다. Business와 Military intelligence에 대한 얘기도 좋아합니다. 모르는걸 모른다고 말할 수 있는 공부가 좋습니다. 하고 싶은거 다 해보고 싶습니다. 늦은 나이에 시작한 만큼 열심히 배우겠습니다. 감사합니다.</p>
+                <a href="#" class="btn">About me</a>
+            </div>
+            <ul class="sci">
+                <li><a href="#"><img src="facebook.png"></a></li>
+                <li><a href="#"><img src="twitter.png"></a></li>
+                <li><a href="#"><img src="instagram.png"></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="about" id=about>
+        <div class="title white">
+            <h2>About Me</h2>
+            <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+        </div>
+        <div class="content">
+            <div class="textBx">
+                <p> &lt;멋쟁이사자처럼 백엔드 아카데미 The origin:Django 1기 &gt;&lt;kosa 더존 5기 &gt; 김성현입니다. 남들이 걸어간 적 없는 길을 도전하는 것에 가장 큰 성취감을 느낍니다. 끊임없이 부딪혀보고, 성장해가는 ‘삽질하는 프로그래머’가 저의 모토입니다.<br><br>문제해결을 위한 아이디어를 서비스로 기획하는 과정에서 스스로 만들어보고 싶다는 생각을 늘 해왔습니다. 하지만 이를 위해 필요한 지식이 정말 많다는 것을 깨닫고, IT 스터디 그룹 ‘드림스페이스’를 만들게 되었습니다. 학기 중에 나이, 전공이 다양한 사람들과 만나 협동과제를 수행했었습니다.<br><br>여러 분야의 다양한 아이디어를 가지고 사람들과 소통하는 개발자가 되고 싶습니다.
+                </p>
+            </div>
+            <div class="imgBx">
+                <img src="Kakao3.jpg">
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="title">
+            <h2>Our Services</h2>
+            <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+        </div>
+        <div class="content">
+            <div class="servicesBx">
+                <img src="icon1.png">
+                <h2>Web Design</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+            <div class="servicesBx">
+                <img src="icon2.png">
+                <h2>Web Development</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+            <div class="servicesBx">
+                <img src="icon3.png">
+                <h2>Android Apps</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+            <div class="servicesBx">
+                <img src="icon4.png">
+                <h2>Photography</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+            <div class="servicesBx">
+                <img src="icon5.png">
+                <h2>Content Writing</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+            <div class="servicesBx">
+                <img src="icon6.png">
+                <h2>Video Editing</h2>
+                <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="work" id="work">
+        <div class="title">
+            <h2>Recent Work</h2>
+            <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
+        </div>
+        <div class="content">
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img1.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 01</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img2.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 02</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img3.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 03</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img4.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 04</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img5.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 05</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img6.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 06</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img7.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 07</h3>
+                </div>
+            </div>
+            <div class="workBx">
+                <div class="imgBx">
+                    <img src="img8.jpg">
+                </div>
+                <div class="textBx">
+                    <h3>Project 08</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="contact" id="contact">
         <div class="title white">
             <h2>Contact Me</h2>
             <p>남들과 다른 방식으로 시작하고, 같은 방향으로 나아가고 있습니다.</p>
         </div>
-        <form action="http://localhost:9000/index.html" method="post" name="contactForm">
-            <div class="contactForm">
-                <div class="row">
-                    <div class="col50">
-                        <input type="text" name="first_name" placeholder="First Name">
-                    </div>
-                    <div class="col50">
-                        <input type="text" name="last_name" placeholder="Last Name">
-                    </div>
+        <div class="contactForm">
+            <div class="row">
+                <div class="col50">
+                    <input type="text" name="" placeholder="First Name">
                 </div>
-                <div class="row">
-                    <div class="col50">
-                        <input type="text" name="email" placeholder="Email">
-                    </div>
-                    <div class="col50">
-                        <input type="text" name="mobile_no" placeholder="Mobile No.">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col100">
-                        <textarea placeholder="Message"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col100">
-                        <input type="submit" value="Send">
-                        <!--<input type="submit" value="Send" name="Send">-->
-                    </div>
+                <div class="col50">
+                    <input type="text" name="" placeholder="Last Name">
                 </div>
             </div>
-        </form>
+            <div class="row">
+                <div class="col50">
+                    <input type="text" name="" placeholder="Email">
+                </div>
+                <div class="col50">
+                    <input type="text" name="" placeholder="Mobile No.">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col100">
+                    <textarea placeholder="Message"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col100">
+                    <input type="submit" value="Send">
+                </div>
+            </div>
+        </div>
     </section>
-    <div class="copyright">
-        <p>Copyright @ 2020 Online Tutorials. All Right Reserved.</p>
-    </div>
+<div class="copyright">
+    <p>Copyright @ 2020 Online Tutorials. All Right Reserved.</p>
+</div>
     <div class="sidebar">
         <ul class="menu">
             <li><a href="#home" onclick="toggleMenu();">Home</a></li>
